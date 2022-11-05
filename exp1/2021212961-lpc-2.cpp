@@ -6,8 +6,8 @@
         char stuNum[12];
         char stuName[20];
         char stuPhone[14];
-    }sortList; //¶¨ÒåÊý¾Ý¿âÐÐ½á¹¹ ¼ÇÂ¼ÏÂÈý¸ö×Ö¶ÎÓÃÓÚ´æ´¢ÐÅÏ¢
-  void SortListPrint(sortList obj[N],sortList *end,sortList *temp){//É¾³ýÎ»ÖÃºó ½«ºóÃæµÄÔªËØÒÀ´ÎÏòÇ°ÒÆ¶¯Ò»Î»
+    }sortList; //å®šä¹‰æ•°æ®åº“è¡Œç»“æž„ è®°å½•ä¸‹ä¸‰ä¸ªå­—æ®µç”¨äºŽå­˜å‚¨ä¿¡æ¯
+  void SortListPrint(sortList obj[N],sortList *end,sortList *temp){//åˆ é™¤ä½ç½®åŽ å°†åŽé¢çš„å…ƒç´ ä¾æ¬¡å‘å‰ç§»åŠ¨ä¸€ä½
     temp = end;
     for(end=obj;end!=temp;end++){
             printf("%s %s %s\n",end->stuNum,end->stuName,end->stuPhone);
@@ -16,38 +16,38 @@
    void SortListDel(sortList obj[N],sortList *end,sortList *temp,int length){
         char d = 'y';
         int target;
-        cout<<"Ô­Ê¼Êý¾ÝÈçÏÂ:\n";
-        SortListPrint(obj,end,temp);//µ÷ÓÃ´òÓ¡º¯Êý
+        cout<<"åŽŸå§‹æ•°æ®å¦‚ä¸‹:\n";
+        SortListPrint(obj,end,temp);//è°ƒç”¨æ‰“å°å‡½æ•°
         while(d == 'y'){
-            if(obj == end){ //ÅÐ¶ÏÏßÐÔ±íÊÇ·ñÎª¿Õ
-                cout<<"Ë³Ðò±íÎª¿Õ!"<<endl;
+            if(obj == end){ //åˆ¤æ–­çº¿æ€§è¡¨æ˜¯å¦ä¸ºç©º
+                cout<<"é¡ºåºè¡¨ä¸ºç©º!"<<endl;
                 break;
             }
             else{
-                cout<<"ÄãÏëÉ¾³ýÔªËØµÄÎ»ÖÃÔÚ:\n";
+                cout<<"ä½ æƒ³åˆ é™¤å…ƒç´ çš„ä½ç½®åœ¨:\n";
                 cin>>target;
                 if(0<= target <=N+1){
                     for(end = obj; end-temp<length; end++){
-                        //É¾³ýÔªËØÂß¼­
+                        //åˆ é™¤å…ƒç´ é€»è¾‘
                         	if(end-obj==target){
 								for(int i=target;i<=length;i++){
-									obj[i-1]=obj[i];//É¾³ýÎ»ÖÃºó ½«ºóÃæµÄÔªËØÒÀ´ÎÏòÇ°ÒÆ¶¯Ò»Î»
+									obj[i-1]=obj[i];//åˆ é™¤ä½ç½®åŽ å°†åŽé¢çš„å…ƒç´ ä¾æ¬¡å‘å‰ç§»åŠ¨ä¸€ä½
                                 }
                             }
                         }
                       temp -= 1;
                     if(obj == end){
-					    cout<<"Ë³Ðò±íÒÑÇå¿Õ\n";
+					    cout<<"é¡ºåºè¡¨å·²æ¸…ç©º\n";
 						break;
 					    }
-					cout<<"É¾³ýÔªËØºóµÄË³Ðò±í\n";
+					cout<<"åˆ é™¤å…ƒç´ åŽçš„é¡ºåºè¡¨\n";
 					SortListPrint(obj,end,temp);
                           
-                    cout<<"ÊÇ·ñ¼ÌÐøÉ¾³ý(ÊÇÊäÈë'y'):\n";
+                    cout<<"æ˜¯å¦ç»§ç»­åˆ é™¤(æ˜¯è¾“å…¥'y'):\n";
                     cin>>d;
                 }
                 else{
-                cout<<"Ë³Ðò±íÖÐÃ»ÓÐ¸ÃÔªËØ(½á¹¹ÌåÒç³ö):"<<endl;    
+                cout<<"é¡ºåºè¡¨ä¸­æ²¡æœ‰è¯¥å…ƒç´ (ç»“æž„ä½“æº¢å‡º):"<<endl;    
                 }
             }
         }
@@ -56,9 +56,9 @@
   
     
 int main(){
-    sortedList msxb[N]={{"2021212961","ÁÖÅà²Ó","18025597877"},
-                        {"2021212961","ÁÖÅà²Ó","13364063027"},
-                        {"2021212961","ÁÖÅà²Ó","15816750104"}};
+    sortedList msxb[N]={{"2021212961","æž—åŸ¹ç¿","18025597877"},
+                        {"2021212961","æž—åŸ¹ç¿","13364063027"},
+                        {"2021212961","æž—åŸ¹ç¿","15816750104"}};
     sortedList *end=&msxb[3],*tmp=msxb;
     int Len = 3;
     SortListDel(msxb,end,tmp,Len);
