@@ -5,63 +5,62 @@ typedef struct Node_type{
     int l;
     Node_type *next;
 }Node_type;
-// ´´½¨Ò»¸öÑ­»·µ¥Á´±í
+// ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ñ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 Node_type* createChainList(Node_type* head, int n){
-    while(n){//Ñ­»·ÊäÈëº¯Êý
+    while(n){//Ñ­ï¿½ï¿½ï¿½ï¿½ï¿½ëº¯ï¿½ï¿½
     Node_type *p;
         p = (Node_type*)malloc(sizeof(Node_type));
         cin>>p->l;
         head->next=p;        
         head=head->next;   
-        n--; //µ±Ö´ÐÐn´ÎÊäÈëºóÌø³öÑ­»· Ã¿´ÎÊäÈëhead»áÒÆ¶¯µ½ÏÂÒ»¸ö½Úµã
+        n--; //ï¿½ï¿½Ö´ï¿½ï¿½nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ­ï¿½ï¿½ Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½headï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Úµï¿½
         } 
    
     return head;
 }
 
-void display(Node_type *head,Node_type *tmp) //´òÓ¡ÏÔÊ¾º¯Êý
-    {  
-        tmp=tmp->next;  //³õÊ¼»¯
-		if(tmp==head){   //ÅÐ¶ÏÊÇ·ñµ¥Á´±íÎª¿Õ
-			cout<<"µ¥Á´±íÎª¿Õ"<<endl;
+void display(Node_type *head,Node_type *tmp) //ï¿½ï¿½Ó¡ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
+        tmp=tmp->next;  //ï¿½ï¿½Ê¼ï¿½ï¿½
+		if(tmp==head){   //ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½
+			cout<<"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½"<<endl;
 		}
 		else{
-			while(tmp!=head->next){     //·Ç¿ÕÔòÒÀ´ÎÊä³ö
+			while(tmp!=head->next){     //ï¿½Ç¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				cout<<tmp->l<<"  ";
 				tmp=tmp->next;
 			}
 		}
     }
 
-void destroy(Node_type *head, Node_type *tmp) //»ØÊÕÄÚ´æº¯Êý
-    {   //´ËÊ±Í·½ÚµãÊÇÎ²Ö¸Õë tmpÊÇÍ·Ö¸Õë
-        while(tmp->next!=head){  //»ØÊÕÄÚ´æº¯Êý Í·½Úµã²»·µ»ØÍ·½ÚµãÎ»ÖÃ Ò»Ö±»ØÊÕ
+void destroy(Node_type *head, Node_type *tmp) //ï¿½ï¿½ï¿½ï¿½ï¿½Ú´æº¯ï¿½ï¿½
+    {   //ï¿½ï¿½Ê±Í·ï¿½Úµï¿½ï¿½ï¿½Î²Ö¸ï¿½ï¿½ tmpï¿½ï¿½Í·Ö¸ï¿½ï¿½
+        while(tmp->next!=head){  //ï¿½ï¿½ï¿½ï¿½ï¿½Ú´æº¯ï¿½ï¿½ Í·ï¿½Úµã²»ï¿½ï¿½ï¿½ï¿½Í·ï¿½Úµï¿½Î»ï¿½ï¿½ Ò»Ö±ï¿½ï¿½ï¿½ï¿½
             tmp=tmp->next;
 	    	free(head);
 	    }
     }
 int main(){
-    Node_type *head = NULL,*p,*temp;  //³õÊ¼»¯½á¹¹ÌåÖ¸Õë Î²Ö¸Õë ÁÙÊ±Ö¸Õë
+    Node_type *head = NULL,*p,*temp;  //ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½á¹¹ï¿½ï¿½Ö¸ï¿½ï¿½ Î²Ö¸ï¿½ï¿½ ï¿½ï¿½Ê±Ö¸ï¿½ï¿½
     int sum = 0;
     char cmd = 'y';
      p =(Node_type*)malloc(sizeof(Node_type));
-    // ¶¯Ì¬¿ª±Ù´´½¨½Úµã¿Õ¼ä
+    // ï¿½ï¿½Ì¬ï¿½ï¿½ï¿½Ù´ï¿½ï¿½ï¿½ï¿½Úµï¿½Õ¼ï¿½
     p->l= 0;
     p->next = NULL;
     head = p;
     temp = head;
-    while(cmd == 'y'){     //ÅÐ¶Ïº¯ÊýÊÇ·ñÑ­»·½øÐÐ
-            cout<<"ÊäÈë½Úµã¸öÊý\n";
+    while(cmd == 'y'){     //ï¿½Ð¶Ïºï¿½ï¿½ï¿½ï¿½Ç·ï¿½Ñ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            cout<<"ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½\n";
             fflush(stdin);
             cin>>sum;
-             //´´½¨Ò»¸ö³¤¶È¸ø¶¨µÄµ¥Á´±í
+             //ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½È¸ï¿½ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½
             head = createChainList(head,sum);
-            cout<<"Èô¼ÌÐøÊä'y';ÈôÌø³öÊäÈëÈÎÒâ×Ö·û,½«´òÓ¡½á¹û";
+            cout<<"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'y';ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½,ï¿½ï¿½ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½";
             cin>>cmd;
     }
  
-        display(head,temp);  //´òÓ¡Êä³ö
-        destroy(head,temp);  //»ØÊÕ¿Õ¼ä
+        display(head,temp);  //ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½
+        destroy(head,temp);  //ï¿½ï¿½ï¿½Õ¿Õ¼ï¿½
     return 0;
 }
 
