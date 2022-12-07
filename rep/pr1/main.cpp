@@ -1,48 +1,165 @@
 #include<iostream>
-#include<string.h>
-#include<malloc.h>
     using namespace std;
+//Êı¾İ¿ÉÒÆÖ²»¯
     typedef char dataListType;
+//Êı¾İ¿â×Ö¶Î¶¨Òå
     typedef struct dataType{
-        dataListType stuNum[10];
-        dataListType stuName[10];
-        dataListType stuPhone[11];
+        dataListType stuNum[11];
+        dataListType stuName[7];
+        dataListType stuPhone[12];
     }dataType;
-
+//Êı¾İ¿âÑ­»·Á´±í½Úµã¶¨Òå
     typedef struct Node{
         dataType dataBase;
         struct Node *next;
     }Node,*linkList;
+    int length;
 
-    linkList initial() //åˆå§‹åŒ–å¤´ç»“ç‚¹
+//Êı¾İ¿â³õÊ¼»¯(Ñ­»·Á´±í³õÊ¼»¯)
+    linkList initial() //³õÊ¼»¯Í·½áµã
     {
         Node *p;
-        p = (Node*)malloc(sizeof(Node)); //ç”³è¯·å¤´ç»“ç‚¹ç©ºé—´
+        p = (Node*)malloc(sizeof(Node)); //ÉêÇëÍ·½áµã¿Õ¼ä
         if(p == NULL)
-            cout<<"ç”³è¯·å†…å­˜ç©ºé—´å¤±è´¥!"<<endl;
+            cout<<"ÉêÇëÄÚ´æ¿Õ¼äÊ§°Ü!"<<endl;
         else
         {
             p->next = NULL;
-            cout<<"åˆå§‹åŒ–æˆåŠŸ!"<<endl; 
+            length = 0;
+            cout<<"³õÊ¼»¯³É¹¦!"<<endl; 
         }
+        return p;
     }
 
+//Êı¾İÊäÈë(Ñ­»·Á´±í¶àÖµ½ÚµãÊäÈë)
     linkList inputDataList(linkList list)
     {
         Node *p,*q;
         p = list;   
-        int n;                       	  
-        dataType tmp;
-        cout<<"è¾“å…¥é•¿åº¦:";
+        int n;               
+        cout<<"ÇëÊäÈëµ¼ÈëÑ§ÉúĞÅÏ¢ÌõÊın:";
         cin>>n;
-        cout<<"è¾“å…¥å…ƒç´ :";                        
+        cout<<"ÇëÊäÈëÕânÌõÑ§ÉúĞÅÏ¢(¸ñÊ½:\"Ñ§ºÅ ĞÕÃû ÊÖ»úºÅ\"):\n";                        
         while(n--)
         {
             q=(Node*)malloc(sizeof(Node));
-            scanf("%d",&q->dataBase);
+            cin>>q->dataBase.stuNum>>q->dataBase.stuName>>q->dataBase.stuPhone; //°´Ë³ĞòÊäÈëÑ§ÉúĞÅÏ¢ÁĞ±í
+            length += 1;
             q->next = NULL;
             p->next = q;
             p = q;
         } 
         return list;
     } 
+
+
+//Êı¾İ´òÓ¡Êä³öº¯Êı
+    void coutlist(linkList list){
+    int index = 0;
+	Node *head;
+	if(length == 0)//Á´±íÎª¿Õ   
+		cout<<"Ñ§ÉúĞÅÏ¢Êı¾İ¿âÎª¿Õ!"<<endl;
+	//Á´±í²»Îª¿ÕÔòÊä³ö´òÓ¡³öÔªËØ 
+	else 
+	{
+		cout<<"Ñ§ÉúĞÅÏ¢ÈçÏÂ(Ñ§ºÅ/ĞÕÃû/ÊÖ»úºÅ):\n";
+        	cout<<"* ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª *\n";
+             cout<<"|ĞòºÅ| \t "<<"Ñ§ ºÅ\t "<<"| ĞÕ Ãû "<<" | "<<" ÊÖ »ú ºÅ\t|\n";
+             cout<<"* ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª *\n";
+		for(head=list->next;head!=NULL;head=head->next)//µÚÒ»¸öÔªËØÖ¸Ïòlist 
+        {
+         if(head->dataBase.stuPhone!="") {
+            cout<<"| "<< ++index<<" "<<" | "<<head->dataBase.stuNum<<"| "<<head->dataBase.stuName<<" | "<<head->dataBase.stuPhone<<" |\n";
+          } 
+         }
+         
+        cout<<"* ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª *\n";
+          cout<<"| ×ÜÊı¾İÊı:"<<length<<"\t\t\t\t|\n";
+        cout<<"* ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª *\n";
+		cout<<endl<<endl;
+	}
+}
+
+// 2021212961 ÁÖÅà²Ó 13364063027
+    char menu(char handle){
+    cout<<"|**********************************************************|"<<"\n"; 
+    cout<<"|**------------»ùÓÚÑ­»·Á´±íµÄÑ§ÉúÃû²á¹ÜÀíÏµÍ³------------**|"<<"\n"; 
+    cout<<"|**********************************************************|"<<"\n"; 
+    cout<<"|**---------------------ÏµÍ³²Ù×÷²Ëµ¥---------------------**|"<<"\n"; 
+    cout<<"|**********************************************************|"<<"\n"; 
+    cout<<"|**\t \t \t \t \t \t \t **|"<<"\n"; 
+     cout<<"|**\t \t ¡¾0¡¿Ñ§ÉúĞÅÏ¢ÅúÁ¿µ¼Èë \t \t \t **|"<<"\n"; 
+      cout<<"|**\t \t ¡¾1¡¿Ö¸¶¨Î»ÖÃ¼üÈëÑ§ÉúĞÅÏ¢ \t \t **|"<<"\n"; 
+       cout<<"|**\t \t ¡¾2¡¿É¾³ıÖ¸¶¨Ñ§ÉúĞÅÏ¢Êı¾İ \t \t **|"<<"\n"; 
+        cout<<"|**\t \t ¡¾3¡¿°´Ñ§ºÅ²éÑ¯Ñ§Éú»ù±¾ĞÅÏ¢ \t \t **|"<<"\n"; 
+        cout<<"|**\t \t ¡¾4¡¿°´Ñ§ºÅĞŞ¸ÄÑ§Éú»ù±¾ĞÅÏ¢ \t \t **|"<<"\n"; 
+         cout<<"|**\t \t ¡¾5¡¿µ±Ç°Êı¾İ¿âËùÓĞÑ§ÉúĞÅÏ¢ \t \t **|"<<"\n"; 
+         cout<<"|**\t \t ¡¾6¡¿Çå¿ÕÊı¾İ¿â \t \t \t **|"<<"\n"; 
+         cout<<"|**\t \t ¡¾7¡¿¹Ø±ÕÊı¾İ¿â \t \t \t **|"<<"\n"; 
+     cout<<"|**\t \t \t \t \t \t \t **|"<<"\n"; 
+    cout<<"|**********************************************************|"<<"\n"; 
+    cout<<"ÇëÊäÈë²Ù×÷Ö¸Áî,Ä¬ÈÏÎª¡¾0¡¿:"<<"\n"<<endl; 
+    cin>>handle;
+    return handle;
+    }
+
+  int main(){
+        linkList list;
+        dataListType n,i,handle;  
+	    dataType item; 
+	    cout<<"Êı¾İ¿âÁ´±í³õÊ¼»¯!"<<endl;   //³õÊ¼»¯Ñ­»·Á´±í
+	    list = initial();  
+        cout<<"´´½¨Êı¾İ¿â!"<<endl;     //Ê×´ÎÆô¶¯ĞèÒª½øĞĞÊı¾İµ¼Èë
+        list = (Node*)malloc(sizeof(Node)); 
+        list->next = NULL;
+        list->dataBase = item; 
+	    cout<<"Êı¾İ¿âÒÑÆô¶¯,Çë°´ÕÕ²Ëµ¥½øĞĞÊı¾İ²Ù×÷!"<<endl;     //Ê×´ÎÆô¶¯ĞèÒª½øĞĞÊı¾İµ¼Èë
+        loop:handle = menu(handle);
+            switch(handle){
+                case '0':{
+                    list = inputDataList(list);   
+                    coutlist(list);
+                    goto loop;
+                }
+                case '1':{
+                    list = inputDataList(list);   
+                    coutlist(list);
+                    goto loop;
+                }
+                case '2':{
+                    list = inputDataList(list);   
+                    coutlist(list);
+                    goto loop;
+                }
+                case '3':{
+                    list = inputDataList(list);   
+                    coutlist(list);
+                    goto loop;
+                }
+                case '4':{
+                    list = inputDataList(list);   
+                    coutlist(list);
+                    goto loop;
+                }
+                case '5':{ 
+                    coutlist(list);
+                    goto loop;
+                }
+                case '6':{
+                    list = initial();  
+                    list = (Node*)malloc(sizeof(Node)); 
+                    list->next = NULL;
+                    list->dataBase = item; 
+                    goto loop;
+                }
+                case '7':{
+                    cout<<"³ÌĞòÖÕÖ¹"<<endl;
+                    break;
+                }
+                default :{
+                    cout<<"ÊäÈëÖ¸ÁîÓĞÎó£¡ÇëÖØĞÂÊäÈë£¡"<<endl;
+                    goto loop;
+                }
+            }   
+        return 0;
+    }   
