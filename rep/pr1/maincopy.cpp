@@ -9,19 +9,20 @@
         dataListType stuName[7];
         dataListType stuPhone[12];
     }dataType;
-
 //数据库循环链表节点定义
     typedef struct Node{
         dataType dataBase;
         struct Node *next;
     }Node,*linkList;
     int length;
-
+//定义循环链表的头节点 作为循环链表的标志位
+    Node *h;
+    
 //手动更新数据库链表表长
-    int getlen(linkList list){
+     int getlen(linkList list){
         int count = 0;
         linkList p = list;
-        while(p!=NULL)
+        while(p!=list)
         {	
             count++;//计数器累加 
             p = p->next; //指针p指向下一个链结点 
@@ -29,9 +30,9 @@
         return count;
     }
 
-    bool checkDuplication(dataType item,linkList list){
+     bool checkDuplication(dataType item,linkList list){
         Node *head;
-         for(head=list->next;head!=NULL;head=head->next)//第一个元素指向list 
+         for(head=list->next;head!=h;head=head->next)//第一个元素指向list 
         {
          if(strcmp(head->dataBase.stuNum,item.stuNum)== 0) {
            return true;
@@ -40,7 +41,7 @@
          return false;
     }
 //数据库遍历打印
-    void coutlist(linkList list){
+     void coutlist(linkList list){
     int index = 0;
 	Node *head;
 	if(length == 0)//链表为空   
@@ -52,7 +53,7 @@
         	cout<<"* ————————————————————————————————————— *\n";
              cout<<"|序号| \t "<<"学 号\t "<<"| 姓 名 "<<" | "<<" 手 机 号\t|\n";
              cout<<"* ————————————————————————————————————— *\n";
-		for(head=list->next;head!=NULL;head=head->next)//第一个元素指向list 
+		for(head=list->next;head!=h;head=head->next)//第一个元素指向list 
         {
          if(head->dataBase.stuPhone!="") {
             cout<<"| "<< ++index<<" "<<" | "<<head->dataBase.stuNum<<"| "<<head->dataBase.stuName<<" | "<<head->dataBase.stuPhone<<" |\n";
@@ -67,7 +68,7 @@
 }
        
 //数据库初始化(循环链表初始化)
-    linkList initial() //初始化头结点
+     linkList initial() //初始化头结点
     {
         Node *p;
         p = (Node*)malloc(sizeof(Node)); //申请头结点空间
@@ -75,7 +76,7 @@
             cout<<"申请内存空间失败!"<<endl;
         else
         {
-            p->next = NULL;
+            p->next = p;
             length = 0;
             cout<<"初始化成功!"<<endl; 
         }
@@ -83,13 +84,13 @@
     }
 
 //数据输入(循环链表多值节点输入)
-    linkList inputDataList(linkList list)
+     linkList inputDataList(linkList list)
     {  
         Node *p,*q;
         p = list;   
         int n;
-        while(p->next!=NULL)
-		p = p->next;//找到链表末尾结点的地址               
+        while(p!=list)
+		p = p->next;//找到链表标志位结点的地址               
         cout<<"请输入待导入学生信息条数n:";
         cin>>n;
         int i = 0,tmp[n];
@@ -100,17 +101,18 @@
             cin>>q->dataBase.stuNum>>q->dataBase.stuName>>q->dataBase.stuPhone; //按顺序输入学生信息列表
              if(!checkDuplication(q->dataBase,list)){
                     length += 1;
-                    q->next = NULL;
-                    p->next = q;
+                    q->next = h;
+                    p->next = q;    
                     p = q;
                     tmp[i]=0;
                 }
             else{
-                q = NULL;
+                q = h;
                 tmp[i] = 1;
             }
             i++;
         }
+        
         n = i;
         for(i = 0; i < n ; i++)
           if(tmp[i])
@@ -119,17 +121,17 @@
 }
 
 //根据定位在数据库中插入子节点链表 
-    linkList insertNode(linkList list,int x,dataType item)
+     linkList insertNode(linkList list,int x,dataType item)
         {
             linkList p,q = list;
             int j=1;
-            while(j<x&&q!=NULL)
+            while(j<x&&q!=h)
             {
                 q = q ->next;
                 j++; 
             }//寻找第i个链结点
-            if(j!=x||q==NULL)
-                printf("链表中不存在第i个链结点");
+            if(j!=x||q==h)
+                cout<<"链表中不存在第i个链结点"<<endl;
             p = (linkList)malloc(sizeof(linkList));//申请一个新的链结点
             p ->dataBase = item;//将item送新结点的数据域
             p ->next = q ->next;
@@ -145,7 +147,7 @@
         int place = 0;
         cout<<"请输入查询学生对象的学号:\n";
         cin>>item.stuNum;
-            while(p->next !=NULL && strcmp(p->dataBase.stuNum,item.stuNum)!=0)
+            while(p->next !=h && strcmp(p->dataBase.stuNum,item.stuNum)!=0)
             {  
                 place++;
                 p = p->next;
@@ -166,7 +168,7 @@
     }
 
 //根据定位插入数据操作程序
-    void insertBySort(linkList list){
+     void insertBySort(linkList list){
     int x;
     loopInsert:cout<<"请输入插入数据的目标位置序号:\n";
     cin>>x;
@@ -178,7 +180,7 @@
     }
     else if(x>length){
         cout<<"数据库在该位置没有相应数据,不能超过数据库长度!\n";
-        cout<<"重新输入请按\"Y\"键,退出指令按任意键!\n"<<endl;
+        cout<<"输入数据非法! 重新输入请按\"Y\"键,退出指令按任意键!\n"<<endl;
          cin>>cmd;
         if(cmd == 'Y') goto loopInsert;
     }
@@ -201,12 +203,12 @@
 }
 
 //根据序号字段删除数据库中的指定链表节点
-    void deleteBySort(linkList list){
+     void deleteBySort(linkList list){
         int index;
         linkList p = list;
         loopDelBySort:cout<<"请输入删除目标的序号\n";
         cin>>index;
-        if(p != NULL){
+        if(p != h){
             if(typeid(index)!=typeid(int)||index>length||index<0){
                 cout<<"输入学生序号非法!重新输入请按\"Y\",结束按任意键!\n"<<endl;
                 char cmd;
@@ -233,12 +235,12 @@
     }
 
 //根据学号字段删除数据库中的指定链表节点
-    void deleteByStuNum(linkList list){
+     void deleteByStuNum(linkList list){
         dataListType stuNum[11];
         linkList p = list;
-        deleteByStuNum:cout<<"请输入删除目标的学号\n";
+        loopdeleteByStuNum:cout<<"请输入删除目标的学号\n";
         cin>>stuNum;
-        if(p != NULL){
+        if(p != h){
             int i= 0,place= 0;
             while(stuNum[i]!= '\0'){
                 i ++;
@@ -248,12 +250,12 @@
                 char cmd;
                 cin>>cmd;
                 if(cmd == 'Y'){
-                    goto deleteByStuNum;
+                    goto loopdeleteByStuNum;
                 }
             }
             else{
                 linkList q = (linkList)malloc(sizeof(linkList));
-                 while(p->next!=NULL && strcmp(p->dataBase.stuNum,stuNum)!=0){
+                 while(p->next!=h && strcmp(p->dataBase.stuNum,stuNum)!=0){
                     place++;
                     p= p->next;
                  }
@@ -274,7 +276,7 @@
     }
 
 //删除指定数据操作面板
-    void deletePanel(linkList list){
+     void deletePanel(linkList list){
     dataType item;
     char cmd;
     loopDelete:char x;
@@ -309,13 +311,13 @@
 }
 
 //根据学生的学号更新其数据
-    void updateByStuNum(linkList list)
+     void updateByStuNum(linkList list)
     {   dataType item;
         linkList p = list,q,head = list;
-        int place = 0, index = getlen(list);;
+        int place = 0, index = getlen(list);
         cout<<"请输入修改学生对象的学号:\n";
         cin>>item.stuNum;
-            while(p->next !=NULL && strcmp(p->dataBase.stuNum,item.stuNum)!=0)
+            while(p->next !=h && strcmp(p->dataBase.stuNum,item.stuNum)!=0)
             {  
                 place++;
                 p = p->next;
@@ -335,11 +337,10 @@
       length = getlen(list);    
     }
     
-    void reset(linkList list){
+     void reset(linkList list){
                     dataType item;
                     list = initial();  
-                    list = (Node*)malloc(sizeof(Node)); 
-                    list->next = NULL;
+                    list->next = h;
                     list->dataBase = item;
                     length = 0;
     }
@@ -373,8 +374,7 @@
 	    cout<<"数据库链表初始化!"<<endl;   //初始化循环链表
 	    list = initial();  
         cout<<"创建数据库!"<<endl;     //首次启动需要进行数据导入
-        list = (Node*)malloc(sizeof(Node)); 
-        list->next = NULL;
+        list->next = h;
         list->dataBase = item; 
 	    cout<<"数据库已启动,请按照菜单进行数据操作!"<<endl;     //首次启动需要进行数据导入
         loop:handle = menu(handle);

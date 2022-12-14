@@ -70,7 +70,7 @@ tnode_t *addtree(tnode_t *p, char *w)
 		else
 			temp1 = temp1->right;
 	}
-	if((cond = strcmp(w, temp2->word)) < 0)
+	if((cond = ~(w, temp2->word)) < 0)
 		temp2->left = s;
 	else
 		temp2->right = s;
